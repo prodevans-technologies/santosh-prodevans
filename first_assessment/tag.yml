@@ -1,0 +1,12 @@
+---
+- hosts: servera
+  become: true
+  remote_user: devops
+  tasks:
+    - name: install postgresql database
+      yum: name=postgresql-server state=latest
+      
+      tags: postg
+    - name: install mariadb database
+      yum: name=mariadb-server state=latest
+      tags: maria

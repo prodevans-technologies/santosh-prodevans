@@ -1,0 +1,10 @@
+---
+- hosts : servera
+  become : true
+  remote_user : devops
+  tasks : 
+    - name : conditional statement ussing when keywords
+      command : /sbin/init 6
+      when :
+        - ansible_distribution == "MostlyLinux"
+        - ansible_distribution == "7.2"

@@ -1,0 +1,17 @@
+#gather facts
+ansible local -m setup
+#list available hosts
+ansible all -i --list-hosts
+#list active ansible.cfg file and hosts list
+ansible local --list -v
+#copy content from ansible.cfg file
+grep "^\[def" -9 /etc/ansible/ansible.cfg
+#manage configuration
+lab manage setup
+#list ansible modeules
+ansible-doc -l
+#Shell command in ansible
+ansible local -m shell -a 'systemctl status httpd' -u devops -b
+#capture error 
+when: "Error" command_result.STDout
+

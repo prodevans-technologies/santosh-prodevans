@@ -1,0 +1,7 @@
+---
+- hosts : all
+  become : true
+  remote_user : devops
+  tasks : 
+    - name : uninstall httpd service from all nodes
+      yum : name=httpd state=absent

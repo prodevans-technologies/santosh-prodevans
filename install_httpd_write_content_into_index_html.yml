@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks:
+  - name: install httpd service on all nodes
+    yum: name=httpd state=latest
+  - name: start httpd service
+    service: name=httpd state=started enabled=yes
+    notify: service_restart
+  - file: 
+      state: touch
+      path: /var/www/html/index.html
+  - name: add line in file index
+    lineinfile:
+      state: present
+      dest: /var/www/html/index.html
+      line: "this is my first html page"
+  handlers: 
+    - name: service_restart
+      service:  
+        name: httpd
+        state: restarted
+

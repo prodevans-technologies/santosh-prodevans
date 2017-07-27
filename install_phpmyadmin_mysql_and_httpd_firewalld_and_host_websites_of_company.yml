@@ -1,0 +1,42 @@
+#install php,php_mysql,mariadb,fireawalld,httpd
+---
+- name: internet services and databases
+  hosts: servera
+  become: true
+  tasks:
+  - block:
+    - name: install httpd latest version
+      yum: name=httpd state=latest
+    - name: install firewall
+      yum: name=firewalld state=latest
+    - name: install mariadb
+      yum: name=mariadb-server state=latest
+    - name: install php latest version
+      yum: name=php state=latest
+    - name: install latest version php-mysql
+      yum: name=php-mysql state=latest
+  - block:
+    - name: firewalld allow httpd service
+      firewalld: service=http permanent=true state=enabled immediate=yes
+  - block:
+    - name: httpd enabled and running
+      service: name=httpd enabled=true state=started
+    - name: mariadn enabling and running
+      service: name=mariadb enabled=true state=started
+    - name: firewall enabled and running 
+      service: name=firewalld enabled=true state=started
+  - block:
+    - name: test php admin page is accessible
+      get_url:
+        url: "httpd://materials.example.com/grading/var/www/html/index.php"
+        dest: /var/www/html/index.php
+        mode: 0644
+#    - name: test
+#      hosts: localhost
+#      tasks:
+#        - name: connect to internet web server
+#          uri:
+#            url: http://servera.example.local
+#            status_code: 200
+
+   

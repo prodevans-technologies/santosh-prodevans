@@ -1,0 +1,13 @@
+---
+- hosts : servera
+  become : true
+  remote_user : devops
+  tasks : 
+    - name : standard simple loop example add user in wheel group
+      user : 
+        name : "{{item}}"
+        state : present
+        groups : "wheel"
+      with_items : 
+        - userA
+        - userB

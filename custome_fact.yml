@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks:
+    - name: creating custome directory it must be same path as mention below
+      file: 
+        path: "/etc/ansible/facts.d" 
+        state: "directory"
+        mode: 0755
+    - name: "insert custome fact file"
+      copy:
+       src: /etc/ansible/facts.d/custome.fact
+       dest: /etc/ansible/facts.d/custome.fact
+       mode: 0755
+    - name: Re run setup to use custome facts because setup module execute only once at the begin of playbook
+      setup: ~
+    - name: display custome fact result
+      debug:
+        msg: todays date is:= {{ ansible_local.custome }} 
+      

@@ -1,0 +1,11 @@
+---
+- hosts : all
+  become : true
+  remote_user : devops
+  vars_files :
+    - vars.yml
+  tasks :
+    - group : name={{item}} state=present
+      with_items : "{{grp}}"
+    - user : name={{item}} state=present
+      with_items : "{{usr}}"

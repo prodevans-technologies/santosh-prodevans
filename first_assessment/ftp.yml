@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks: 
+    - name: install ftp service
+      yum: name=vsftpd state=latest
+    - name: name firewalld service
+      yum: name=firewalld state=latest
+    - name: start ftp service
+      service:
+        name: vsftpd
+        state: started
+        enabled: yes
+    - name: start firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+    - name: firewalld allow ftp servie
+      firewalld:
+        service: ftp
+        permanent: yes
+        immediate: yes
+        state: started
+    - name: creating welcome.txt
+      copy:
+        content: "Wel come to ftp home"
+        dest: /var/ftp/pub/welcome.txt

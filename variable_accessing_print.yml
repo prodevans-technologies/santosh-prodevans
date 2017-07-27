@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars:
+    base_path: /srv/users/host1/mgmt/sys/users
+    users:
+      santosh:
+        name: santosh Rathod
+        home: "{{base_path}}/santosh"
+      rahul:
+        name: Rahul Munde
+        home: "{{base_path}}/rahul"
+  tasks:
+    - name: print user details records
+      debug: msg="user {{item.key}} full name is {{item.value.name}}. home is {{item.value.home}}"
+      with_dict: "{{users}}"

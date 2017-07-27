@@ -1,0 +1,17 @@
+---
+- hosts : all
+  become : true
+  remote_user : devops
+  vars:
+    users:
+      santosh:
+        name: santosh sheshrao rathod
+        telephone: 9823676134
+      akshay:
+        name: akshay dattatray harbhare
+        telephone: 97655586773
+  tasks:
+   - name: print records
+     debug:
+       msg: "user {{ item.key }} is {{item.value.name}} ({{ item.value.telephone}})"
+     with_dict: "{{ users }}"

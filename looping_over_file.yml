@@ -1,0 +1,10 @@
+--- 
+- hosts : servera 
+  become : true
+  remote_user: devops
+  tasks:
+    - debug:
+        msg: "{{item}}"
+      with_file:
+        - file1
+        - file2

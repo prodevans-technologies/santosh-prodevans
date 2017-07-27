@@ -1,0 +1,13 @@
+---
+- hosts: servera
+  remote_user: devops
+  become: true
+  vars:
+    - system_owner: santosh@example.local
+  tasks:
+    - template:
+        src: motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: 0644

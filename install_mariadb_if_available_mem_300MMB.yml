@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks:
+    - name: install mariadb if enough space on root
+      yum: name=mariadb-srver state=latest
+      with_items: "{{ ansible_mounts  }}"
+      when: item.mount == "/" and item.size_available > 300000000

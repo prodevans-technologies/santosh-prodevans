@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  vars_prompt:
+  - name: user_name
+    prompt: enter user name
+    private: no
+  - name: group_name
+    prompt: enter group name u want to add user
+    private: no
+  tasks:
+    - name : adding group
+      group : name="{{group_name}}" state=present
+    - name: useraadd
+      user: name="{{user_name}}" group="{{group_name}}" state=present
+
+
+

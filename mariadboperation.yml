@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+    - name: install mariadb
+      yum : name=mariadb-server state=latest
+    - name: statrt mariadb service
+      service : name=mariadb state=started enabled=yes
+    - name: install python module
+      yum : python-mysqldb state=latest
+    - name: login to mariadb
+      mysql_user: name=root host="%" password=""  

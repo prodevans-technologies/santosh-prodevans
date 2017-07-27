@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks:
+    - name: my tagged task
+      yum: name=httpd state=latest
+      tags: installhttpd
+    - name: install postfix
+      yum: name=postfix state=latest
+      

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks: 
+    - block:
+        - shell: cmd=/user/local/lib/upgrade-database
+      rescue:
+        - shell: cmd=/usr/local/lib/create-users
+      always: 

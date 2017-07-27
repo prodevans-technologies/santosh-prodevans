@@ -1,0 +1,30 @@
+---
+- hosts: servera
+  become: true
+  remote_user: devops
+  tasks:
+    - name: install httpd
+      yum: name=httpd state=latest
+    - name: install firewalld
+      yum: name=firewalld state=latest
+    - name: creating index.html page
+      copy:
+        content: "hi this is first html page demo \n"
+        dest: /var/www/html/sample.html
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: start firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: firewalld rules for allow httpd service
+      firewalld:
+        service: http
+        permanent: yes
+        immediate: yes
+        state: enabled

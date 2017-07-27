@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  vars:
+    grp1usr:
+      - user1
+      - user2
+      - user3
+      - user4
+      - user5
+    grp2usr:
+      - user6
+      - user7
+      - user8
+    grp:
+      - devel123
+      - tester123
+
+  tasks:
+    - name: adding groups
+      group: name={{ item }} state=present
+      with_items: "{{ grp }}"
+      
+
+    - name: adding users into devel group
+      user: 
+        name: "{{ item }}"
+        state: present
+        group: devel
+      with_items: "{{ grp1usr }}"
+
+    - name: adding users into tester groups
+      user:
+        name: "{{ item }}"
+        state: present
+        group: tester
+      with_items: "{{ grp2usr }}"

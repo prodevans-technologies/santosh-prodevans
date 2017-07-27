@@ -1,0 +1,26 @@
+---
+- name: install httpd
+  yum: name=httpd state=latest
+
+- name: creating page
+  copy:
+    content: "this is first roles demo"
+    dest: /var/www/html/roles.html
+  notify: restart httpd
+
+- name: install firewalld
+  yum: name=firewalld state=latest
+
+
+- name: start httpd
+  service: name=httpd state=started
+
+- name: start firewalld
+  service: name=firewalld state=started
+
+- name: allow firewalld
+  firewalld:
+    service: http
+    permanent: true
+    immediate: yes
+    state: enabled

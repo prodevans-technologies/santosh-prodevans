@@ -1,0 +1,19 @@
+---
+- hosts : all
+
+  tasks : 
+    - name : install ntp service
+      yum : name=ntp state=latest
+      notify :
+        - ntp_service
+    - name : install httpd 
+      yum : name=httpd state=latest
+      notify :
+        - httpd_service
+
+  handlers :
+    - name : ntp_service
+      service : name=ntp state=started enabled=yes
+    - name : httpd_service
+      service : name=httpd state=started enabled=yes
+

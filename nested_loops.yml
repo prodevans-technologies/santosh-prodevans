@@ -1,0 +1,16 @@
+---
+- name: demo of nested_loop
+  hosts: servera
+  remote_user: devops
+
+  vars:
+    list1: [ 1, 2, 3, 4 ]
+    list2: [ 'santosh', 'rajanikant', 'vikram', 'akshay' ]
+
+  tasks: 
+    - name: print all the values
+      debug: msg="values are {{item.0 }} and {{item.1 }}"
+
+      with_nested:
+        - "{{list1}}"
+        - "{{list2}}"

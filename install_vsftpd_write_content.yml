@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks:
+    - name: install vsftpd service
+      yum : name=vsftpd state=latest
+    - copy: dest=/var/fpt/pub/test.txt content=" file is created by ansible"
+    - name:
+      service: name=vsftpd state=started enabled=yes
+

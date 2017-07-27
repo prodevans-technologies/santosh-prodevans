@@ -1,0 +1,29 @@
+--- 
+- hosts: servera
+  become: true
+  remote_user: devops
+  vars:
+    web:
+      - web1
+      - web2
+      - web3
+  tasks:
+    - name: install httpd
+      yum: name=httpd state=latest
+    - name: install firewalld
+      yum: name=firewalld state=latest
+    - name: start http service
+      service: name=httpd state=started enabled=yes
+    - name: start firewalld service
+      service: name=firewalld state=started enabled=yes
+    - name: firewall allow httpd service  
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: creating index.html
+      copy:
+        content: " Welcome to {{ item }} Home_page \n"
+        dest: /var/www/html/{{ item }}
+      with_items: "{{ web }}"

@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  remote_user: devops
+  tasks: 
+    - name: install httpd
+      yum: name=httpd state=latest
+    - name: install firewalld
+      yum: name=firewalld state=latest
+    - name: enabled services
+      service: name=httpd state=started
+    - name: sjajak 
+      service: name=firewalld state=started
+    - name: enabled 
+      firewalld:
+        service:
+          name: http
+          enabled: yes
+          permanent: yes
+          immediate: yes
+    - name:
+      content: "fdsfdssd"
+      dest: /var/www/html/santosh.html
+
+

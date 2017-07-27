@@ -1,0 +1,42 @@
+#install httpd and firewalld make sure both are running and firewall allow httpd service also create index.html page and write the content in index.html and aslo verify that the index.html page is retur 200 code
+---
+- name: intranet services
+  hosts: servera
+  become: true
+  tasks:
+  - name: latest httpd version installation
+    yum:
+      name: httpd
+      state: latest
+  - name: latest firewalld version installation
+    yum:
+      name: firewalld
+      
+      state: latest
+  - name: firewall allow http service
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: yes
+  - name: hhtpd enabled and running
+    service:
+      name: httpd
+      enabled: yes
+      state: started
+  - name:
+    service:
+      name: firewalld
+      enabled: yes
+      state: started
+  - name: creating page
+    copy: 
+      content: "welcome to the servera.example.local"
+      dest: /var/www/html/index.html
+- name: testing page is accessible 
+  hosts: localhost
+  tasks:
+  - name: connect to intranet
+    uri:
+      url: http://servera.example.local
+      status_code: 200

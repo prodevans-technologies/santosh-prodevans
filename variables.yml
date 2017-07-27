@@ -1,0 +1,18 @@
+---
+- hosts : all
+  become : true
+  remote_user : devops
+  vars : 
+    usr :
+      - user1
+      - user2
+      - user3
+    grp :
+      - group1
+      - group1
+  tasks : 
+    - group : name={{item}} state=present
+      with_items : "{{grp}}"
+    
+    - user : name={{item}} state=present
+      with_items : "{{usr}}"

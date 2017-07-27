@@ -1,0 +1,16 @@
+---
+- name: apply common setup
+  hosts: servera
+  remote_user: devops
+  become: yes
+
+  roles:
+  - commonsetup
+
+- name: apply httpd setup
+  hosts: servera
+  remote_user: devops
+  become: yes
+
+  roles:
+  - httpdsetup

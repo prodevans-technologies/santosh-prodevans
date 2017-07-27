@@ -1,0 +1,10 @@
+---
+- hosts : all
+  become : true
+  remote_user : devops
+  tasks : 
+    - name : install mariadb database
+      yum : name=mariadb-server state=latest
+    - name : start mariadb 
+      service : name=mariadb state=started enabled=yes
+
