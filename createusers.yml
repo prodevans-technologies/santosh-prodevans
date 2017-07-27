@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  roles:
+  - role/examfun
+  tasks:
+    - name: creating groups
+      group: name={{ item }} state=present
+      with_items:
+        - staff
+        - webclients
+        - guest
+
+    - name: addusers in staff,webclient group 
+      user: name={{item}} groups=staff,webclient state=present
+      with_items: "{{ staff }}"
+    
+    - name: addusers in guest and 
+      user: name={{ item }} groups=guest,webclient state=present
+      with_items: "{{ guest }}"
+
+    - name: deleting user which in a list of revoke
+      user: name={{ item }} state=absent
+      with_items: "{{ revoke }}"

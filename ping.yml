@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  tasks:
+    - name: tag1 
+      copy:
+        content: "I am tag1"
+        dest: /var/www/html/tag1.html
+      when: ansible_hostname in ['node1','node3']
+      tags: tag1
+    
+    - name: tag2
+      copy:
+        content: "I am tag2"
+        dest: /var/www/html/tag2.html
+      when: ansible_hostname in ['node2','node4']
+      tags: tag2

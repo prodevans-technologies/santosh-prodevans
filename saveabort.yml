@@ -1,0 +1,19 @@
+---
+- hosts: [node1,node4]
+  become: true
+  remote_user: root
+  tasks:
+    - name: chech that the saveabort.txt file is exist
+      stat:
+        path: /etc/saveabort.txt
+      register: stat_result
+
+    - name: create the file and write the content if it does not exits
+      copy:
+        content: "I am there"
+        dest: /etc/saveabort.txt
+      when: stat_result.stat.exists == False
+
+    - name: check the file is already exits 
+      debug: msg="file is already exits"
+      when: stat_result.stat.exists == true

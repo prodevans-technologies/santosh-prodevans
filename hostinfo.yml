@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  tasks:
+    - name: creating hostinfo.txt file
+      copy:
+        content: "{{ ansible_hostname }} {{ ansible_processor_count }} {{ ansible_all_ipv4_addresses }} {{ ansible_default_ipv4.macaddress }} "
+        dest: /root/hostinfo.txt

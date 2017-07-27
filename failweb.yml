@@ -1,0 +1,32 @@
+---
+- hosts: node1
+  become: true
+  remote_user: root
+  tasks:
+    - name: install ex407-server
+      yum: name=ex407-server state=latest
+      register: install_result
+      ignore_errors: true
+
+
+    - name: display installation failed message
+      debug: msg="installation failed"
+      when: install_result | failed
+
+    - name: start ex407-server 
+      service: name=ex407-server state=started
+      register: service_result
+      ignore_errors: true
+
+    - name: display service starting failed
+      debug: msg="starting service failed"
+      when: service_result | failed
+    
+    - name: display message installation unsuccess if both condition failed
+      debug: msg="installation of ex407-server unsuccess"
+      when: install_result | failed and service_result | failed
+    
+
+    - name: display message installation success if both condition are success
+      debug: msg="installation of ex407-server success"
+      when: install_result | success and service_result | success

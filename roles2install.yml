@@ -1,0 +1,5 @@
+---
+- src: https://rhgls.example.com/files/examfun.tgz
+  name: examfun # role name
+# while running this yml file run folloling command
+# ansible-galaxy install -r filename.yml

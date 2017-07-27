@@ -1,0 +1,26 @@
+---
+- name: creating zip file for production group
+  hosts: production
+  become: true
+  remote_user: root
+  tasks:
+    - name: install zip if not
+      yum: name=zip state=latest
+
+    - name: creating zip file
+      command: /bin/zip  /var/tmp/production.tar.zip  /var/www/html/
+
+  tags: production
+
+
+- name: creating zip file for backup group
+  hosts: backup
+  become: true
+  remote_user: root
+  tasks:
+    - name: install zip if not
+      yum: name=zip state=latest
+
+    - name: creating zip file
+      command: /bin/zip  /var/tmp/backup.tar.zip  /var/www/html/
+  tags: backup

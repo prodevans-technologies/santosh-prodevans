@@ -1,0 +1,21 @@
+---
+- name: take input stop http service
+  vars_prompt:
+  - name: hostname2
+    prompt: enter node to stope httpd service either node1 OR node4
+    private: no
+  hosts: "{{ hostname2 }}"
+  tasks:
+    - name: stopping httpd service on given node
+      service: name=httpd state=stopped
+
+
+- name: take input start http service
+  vars_prompt:
+  - name: hostname1
+    prompt: enter hostname to start httpd service 
+    private: no
+  hosts: "{{ hostname1 }}"
+  tasks:
+    - name: starting httpd service on given node
+      service: name=httpd state=started

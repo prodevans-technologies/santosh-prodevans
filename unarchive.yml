@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  vars_files:
+    - crypt.yml
+  tasks:
+    #- name: download zip file
+     # get_url:
+      #  url: 
+    - name: before unzip install unzip service on it.
+      yum: name=unzip state=latest
+    - name: unzip downloaded zip file into /var/www/html/
+      command: unzip -o -p {{ password }} vault.zip /var/www/html
+
